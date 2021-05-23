@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_23_185044) do
+ActiveRecord::Schema.define(version: 2021_05_23_220419) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,36 @@ ActiveRecord::Schema.define(version: 2021_05_23_185044) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+  end
+
+  create_table "bicycles", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "rims", force: :cascade do |t|
+    t.bigint "wheel_id", null: false
+    t.string "color"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["wheel_id"], name: "index_rims_on_wheel_id"
+  end
+
+  create_table "saddles", force: :cascade do |t|
+    t.bigint "bicycle_id", null: false
+    t.string "color"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["bicycle_id"], name: "index_saddles_on_bicycle_id"
+  end
+
+  create_table "wheels", force: :cascade do |t|
+    t.bigint "bicycle_id", null: false
+    t.integer "size"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["bicycle_id"], name: "index_wheels_on_bicycle_id"
+    t.index ["size"], name: "index_wheels_on_size", unique: true
   end
 
 end
