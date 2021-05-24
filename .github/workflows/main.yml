@@ -41,8 +41,8 @@ jobs:
       - name: Before install
         run: |
             sudo systemctl start postgresql
-            psql -c 'create database bicycle_shop;' -U postgres
-            psql -U postgres -q -d bicycle_shop -f db/structure.sql
+            PGPASSWORD=postgres psql -c 'create database bicycle_shop;' -U postgres
+            PGPASSWORD=postgres psql -U postgres -q -d bicycle_shop -f db/structure.sql
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
             chmod +x ./cc-test-reporter
             ./cc-test-reporter before-build
