@@ -48,8 +48,8 @@ jobs:
       
       - name: Before install
         run: |
-            apt-get update
-            apt-get install --yes postgresql-client
+            sudo apt-get update
+            sudo apt-get install --yes postgresql-client
             PGPASSWORD=postgres_password psql -c 'create database bicycle_shop;' -U postgres_user
             PGPASSWORD=postgres_password psql -U postgres_user -q -d bicycle_shop -f db/structure.sql
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
