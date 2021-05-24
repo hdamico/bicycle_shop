@@ -28,6 +28,7 @@ jobs:
         env:
           PGPORT: 5433
           POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres_password
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
