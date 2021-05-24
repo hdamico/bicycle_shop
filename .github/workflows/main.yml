@@ -25,13 +25,21 @@ jobs:
         image: redis
       # Label used to access the service container
       postgres:
-        # Docker Hub image
         image: postgres:13
-        # Provide the password for postgres
         env:
-          POSTGRES_DB: postgres        
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_USER: postgres
+          POSTGRES_DB: postgres_db
+          POSTGRES_PASSWORD: postgres_password
+          POSTGRES_PORT: 5432
+          POSTGRES_USER: postgres_user
+        ports:
+          # maps tcp port 5432 on service container to the host
+          - 5432:5432
+        # set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -40,9 +48,8 @@ jobs:
       
       - name: Before install
         run: |
-            sudo systemctl start postgresql
-            PGPASSWORD=postgres psql -c 'create database bicycle_shop;' -U postgres
-            PGPASSWORD=postgres psql -U postgres -q -d bicycle_shop -f db/structure.sql
+            PGPASSWORD=postgres_password psql -c 'create database bicycle_shop;' -U postgres_user
+            PGPASSWORD=postgres_password psql -U postgres_user -q -d bicycle_shop -f db/structure.sql
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
             chmod +x ./cc-test-reporter
             ./cc-test-reporter before-build
