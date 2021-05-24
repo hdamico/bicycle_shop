@@ -45,7 +45,7 @@ before_script:
 script:
   - bundle exec rails webpacker:compile
   - bundle exec rspec
-  - bundle exec rake code_analysis
+  - bundle exec rake code:analysis
 
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
