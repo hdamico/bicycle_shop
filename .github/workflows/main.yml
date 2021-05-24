@@ -35,8 +35,7 @@ jobs:
       
       - name: Before install
         run: |
-            sudo apt-get update
-            sudo apt-get install --yes postgresql-client
+            pg_ctl start
             psql -c 'create database bicycle_shop_travis;' -U travis
             psql -U travis -q -d bicycle_shop_travis -f db/structure.sql
             cp config/database.yml.travis config/database.yml
