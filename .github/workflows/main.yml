@@ -23,7 +23,7 @@ jobs:
       # Label used to access the service container
       postgres:
         # Docker Hub image
-        image: postgres
+        image: postgres:latest
         # Provide the password for postgres
         env:
           PGPORT: 5433
@@ -35,6 +35,8 @@ jobs:
       
       - name: Before install
         run: |
+            apt-get update
+            apt-get install --yes postgresql-client
             psql -c 'create database bicycle_shop_travis;' -U travis
             psql -U travis -q -d bicycle_shop_travis -f db/structure.sql
             cp config/database.yml.travis config/database.yml
