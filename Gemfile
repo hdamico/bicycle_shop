@@ -67,6 +67,7 @@ group :test do
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'rspec-rails', '5.0.1'
   gem 'shoulda-matchers', '~> 4.5', '>= 4.5.1'
+  gem 'simplecov', '~> 0.21.2', require: false
   gem 'webdrivers'
 end
 
