@@ -16,19 +16,28 @@ jobs:
       CC_TEST_REPORTER_ID: e360f84de7076f58cf70acfc5335d7ddde2232bee661bd6438f2960bdd31be7f
       CODE_CLIMATE_API_URL: https://api.codeclimate.com/v1
       CODE_CLIMATE_API_ORG_NAME: hdamico
+      DB_HOST: localhost
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
 
     services:
       redis:
         image: redis
       # Label used to access the service container
       postgres:
-        # Docker Hub image
-        image: postgres:13
-        # Provide the password for postgres
+        image: postgres:latest
         env:
-          PGPORT: 5433
+          POSTGRES_DB: postgres        
+          POSTGRES_PASSWORD: postgres
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres_password
+        ports:
+          - 5432:5432
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -38,8 +47,8 @@ jobs:
       - name: Before install
         run: |
             sudo systemctl start postgresql
-            psql -c 'create database bicycle_shop;'
-            psql -q -d bicycle_shop -f db/structure.sql
+            psql -c 'create database bicycle_shop;' -U postgres
+            psql -U postgres -q -d bicycle_shop -f db/structure.sql
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
             chmod +x ./cc-test-reporter
             ./cc-test-reporter before-build
