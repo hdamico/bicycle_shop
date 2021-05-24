@@ -27,14 +27,11 @@ jobs:
       postgres:
         image: postgres:13
         env:
-          POSTGRES_DB: postgres_db
-          POSTGRES_PASSWORD: postgres_password
-          POSTGRES_PORT: 5432
-          POSTGRES_USER: postgres_user
+          POSTGRES_USER: root
+          POSTGRES_PASSWORD: secret
+          POSTGRES_DB: bicycle_shop
         ports:
-          # maps tcp port 5432 on service container to the host
           - 5432:5432
-        # set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -48,11 +45,8 @@ jobs:
       
       - name: Before install
         run: |
-            sudo apt-get update
-            sudo apt-get install --yes postgresql-client
-            sudo systemctl start postgresql
-            PGPASSWORD=postgres_password psql -c 'create database bicycle_shop;' -U postgres_user
-            PGPASSWORD=postgres_password psql -U postgres_user -q -d bicycle_shop -f db/structure.sql
+            PGPASSWORD=secret psql -c 'create database bicycle_shop;' -U root
+            PGPASSWORD=secret psql -U root -q -d bicycle_shop -f db/structure.sql
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
             chmod +x ./cc-test-reporter
             ./cc-test-reporter before-build
