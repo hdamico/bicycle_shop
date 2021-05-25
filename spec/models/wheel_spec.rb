@@ -3,7 +3,7 @@
 # Table name: wheels
 #
 #  id         :bigint           not null, primary key
-#  bicycle_id :bigint           not null
+#  bicycle_id :bigint
 #  size       :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -11,7 +11,7 @@
 # Indexes
 #
 #  index_wheels_on_bicycle_id  (bicycle_id)
-#  index_wheels_on_size        (size) UNIQUE
+#  index_wheels_on_size        (size)
 #
 require 'rails_helper'
 

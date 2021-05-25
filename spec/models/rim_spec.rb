@@ -3,10 +3,11 @@
 # Table name: rims
 #
 #  id         :bigint           not null, primary key
-#  wheel_id   :bigint           not null
+#  wheel_id   :bigint
 #  color      :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  size       :integer
 #
 # Indexes
 #
