@@ -3,7 +3,7 @@
 # Table name: saddles
 #
 #  id         :bigint           not null, primary key
-#  bicycle_id :bigint           not null
+#  bicycle_id :bigint
 #  color      :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -16,7 +16,7 @@ require 'rails_helper'
 
 RSpec.describe Saddle, type: :model do
   describe 'associations' do
-    it { is_expected.to belong_to(:bicycle) }
+    it { is_expected.to belong_to(:bicycle).optional }
   end
 
   describe 'validations' do

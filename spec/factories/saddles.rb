@@ -3,7 +3,7 @@
 # Table name: saddles
 #
 #  id         :bigint           not null, primary key
-#  bicycle_id :bigint           not null
+#  bicycle_id :bigint
 #  color      :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null

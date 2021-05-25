@@ -96,10 +96,11 @@ ALTER SEQUENCE public.bicycles_id_seq OWNED BY public.bicycles.id;
 
 CREATE TABLE public.rims (
     id bigint NOT NULL,
-    wheel_id bigint NOT NULL,
+    wheel_id bigint,
     color character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    size integer
 );
 
 
@@ -128,7 +129,7 @@ ALTER SEQUENCE public.rims_id_seq OWNED BY public.rims.id;
 
 CREATE TABLE public.saddles (
     id bigint NOT NULL,
-    bicycle_id bigint NOT NULL,
+    bicycle_id bigint,
     color character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
@@ -169,7 +170,7 @@ CREATE TABLE public.schema_migrations (
 
 CREATE TABLE public.wheels (
     id bigint NOT NULL,
-    bicycle_id bigint NOT NULL,
+    bicycle_id bigint,
     size integer,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
@@ -325,7 +326,7 @@ CREATE INDEX index_wheels_on_bicycle_id ON public.wheels USING btree (bicycle_id
 -- Name: index_wheels_on_size; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_wheels_on_size ON public.wheels USING btree (size);
+CREATE INDEX index_wheels_on_size ON public.wheels USING btree (size);
 
 
 --
@@ -339,6 +340,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210523220397'),
 ('20210523220400'),
 ('20210523220405'),
-('20210523220419');
+('20210523220419'),
+('20210525191039'),
+('20210525191624'),
+('20210525191913');
 
 
