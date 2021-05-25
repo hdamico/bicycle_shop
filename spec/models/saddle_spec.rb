@@ -16,7 +16,7 @@ require 'rails_helper'
 
 RSpec.describe Saddle, type: :model do
   describe 'associations' do
-    it { is_expected.to belong_to(:bicycle) }
+    it { is_expected.to belong_to(:bicycle).optional }
   end
 
   describe 'validations' do
