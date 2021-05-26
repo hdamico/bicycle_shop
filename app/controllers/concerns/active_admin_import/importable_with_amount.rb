@@ -1,6 +1,6 @@
 module ActiveAdminImport
   module ImportableWithAmount
-    include ActiveSupport::Concern
+    extend ActiveSupport::Concern
 
     def duplicate_values_by_amount
       amounts = retrieve_amounts
