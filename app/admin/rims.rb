@@ -3,8 +3,12 @@ ActiveAdmin.register Rim do
   active_admin_import validate: true,
                       before_batch_import: proc { |import|
                         if import.headers.key?('amount')
-                          self.class.include ImportWithAmount
-                          duplicate_values_by_amount(import)
+                          self.class.include ActiveAdminImport::ImportableWithAmount
+
+                          @csv_lines = import.csv_lines
+                          @headers = import.headers
+                          import.csv_lines = duplicate_values_by_amount
+                          import.headers.except!('amount')
                         end
                       },
                       back: { action: :index }
