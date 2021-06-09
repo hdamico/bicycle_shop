@@ -29,10 +29,6 @@ env:
 
 install:
   - bundle install
-  - nvm install node
-  - node -v
-  - npm i -g yarn
-  - yarn
 
 before_script:
   - psql -c 'create database bicycle_shop_travis;' -U travis
@@ -43,7 +39,6 @@ before_script:
   - ./cc-test-reporter before-build
 
 script:
-  - bundle exec rails webpacker:compile
   - bundle exec rspec
   - bundle exec rake code:analysis
 
